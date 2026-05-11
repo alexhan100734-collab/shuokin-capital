@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>烁金资本 | SHUOKIN Capital</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#05050A;--surface:#0A0A12;--text:#E8E4E0;--muted:#8A8A9A;
+    --gold:#F4D03F;--red:#C0392B;--teal:#1ABC9C;--blue:#AADDFF;
+  }
+  body{font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.8;overflow-x:hidden}
+  .font-display{font-family:"Noto Serif SC","Source Han Serif SC",serif;font-weight:700;letter-spacing:-0.02em}
+  .font-en{font-family:"Space Grotesk","Helvetica Neue",sans-serif;letter-spacing:0.1em}
+  a{color:inherit;text-decoration:none}
+  button{cursor:pointer;font-family:inherit}
+  /* Hero */
+  .hero{position:relative;width:100%;height:100vh;overflow:hidden;display:flex;align-items:flex-end;justify-content:center;padding-bottom:15vh}
+  .hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#0a0a1a 0%,#1a1030 40%,#0d1f2d 70%,#05050A 100%);z-index:0}
+  .hero-orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.4;animation:orbFloat 20s ease-in-out infinite}
+  .hero-orb:nth-child(1){width:400px;height:400px;background:radial-gradient(circle,#2d1b69,#0a0a1a);top:10%;left:20%;animation-delay:0s}
+  .hero-orb:nth-child(2){width:300px;height:300px;background:radial-gradient(circle,#1b4d6b,#0a0a1a);top:40%;right:15%;animation-delay:-7s}
+  .hero-orb:nth-child(3){width:250px;height:250px;background:radial-gradient(circle,#4a306d,#0a0a1a);bottom:20%;left:40%;animation-delay:-14s}
+  @keyframes orbFloat{0%,100%{transform:translate(0,0)}25%{transform:translate(30px,-20px)}50%{transform:translate(-20px,30px)}75%{transform:translate(20px,20px)}}
+  .hero-glow{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(244,208,63,0.08) 0%,transparent 70%);pointer-events:none}
+  .hero-content{position:relative;z-index:10;text-align:center;max-width:900px;padding:0 40px}
+  .hero-content h1{font-size:clamp(32px,5vw,56px);font-weight:900;line-height:1.1;margin-bottom:20px;text-shadow:0 2px 40px rgba(0,0,0,0.5)}
+  .hero-content .subtitle{font-size:clamp(14px,1.4vw,18px);color:var(--muted);letter-spacing:0.1em;margin-bottom:12px}
+  .hero-content .tag{font-size:clamp(11px,1vw,13px);color:rgba(138,138,154,0.6);letter-spacing:0.15em}
+
+  /* Sections */
+  section{padding:10vh 0;position:relative}
+  .container{max-width:1100px;margin:0 auto;padding:0 40px}
+  .section-label{text-align:center;margin-bottom:60px}
+  .section-label .en{font-size:11px;font-weight:500;color:var(--muted);letter-spacing:0.3em;text-transform:uppercase;margin-bottom:16px;display:block}
+  .section-label h2{font-size:clamp(28px,4vw,44px);font-weight:900}
+
+  /* Capabilities */
+  .biz-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .biz-card{background:rgba(10,10,18,0.4);backdrop-filter:blur(20px);border:1px solid rgba(232,228,224,0.08);border-radius:4px;padding:40px 32px;display:flex;flex-direction:column;gap:16px;cursor:pointer;transition:all .3s ease;position:relative;overflow:hidden}
+  .biz-card:hover{border-color:rgba(232,228,224,0.15);transform:translateY(-4px)}
+  .biz-card .accent{position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(to right,transparent,var(--color),transparent);opacity:.6}
+  .biz-card h3{font-size:28px;font-weight:900}
+  .biz-card .en-label{font-size:11px;font-weight:500;letter-spacing:.15em}
+  .biz-card p{font-size:14px;color:var(--muted);line-height:1.8}
+  .biz-card .detail{font-size:12px;color:rgba(138,138,154,0.5);line-height:1.8}
+  .biz-card .more{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:11px;font-weight:500;letter-spacing:.1em}
+
+  /* Projects */
+  .proj-table{display:flex;flex-direction:column;gap:4px}
+  .proj-header{display:grid;grid-template-columns:2fr 80px 100px 100px 80px;gap:12px;padding:12px 20px;border-bottom:1px solid rgba(232,228,224,0.1);font-size:10px;color:var(--muted);letter-spacing:.15em;text-transform:uppercase}
+  .proj-row{display:grid;grid-template-columns:2fr 80px 100px 100px 80px;gap:12px;padding:16px 20px;align-items:center;border-radius:4px;transition:background .3s}
+  .proj-row:hover{background:rgba(232,228,224,0.03)}
+
+  /* Partners */
+  .partner-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .partner-card{background:rgba(10,10,18,0.4);backdrop-filter:blur(20px);border:1px solid rgba(232,228,224,0.08);border-radius:4px;padding:32px 28px;display:flex;flex-direction:column;gap:12px;transition:all .3s ease}
+  .partner-card:hover{border-color:rgba(232,228,224,0.2);transform:translateY(-2px)}
+
+  /* Footer */
+  .footer-section{min-height:80vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+  .footer-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(45,27,105,0.15) 0%,transparent 50%),radial-gradient(ellipse at 70% 30%,rgba(26,77,107,0.1) 0%,transparent 50%),#05050A}
+  .stars{position:absolute;inset:0;pointer-events:none}
+  .star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;animation:twinkle var(--dur) ease-in-out infinite}
+  @keyframes twinkle{0%,100%{opacity:.2}50%{opacity:1}}
+  .ring{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;height:500px;border:1px solid rgba(170,221,255,0.05);border-radius:50%;pointer-events:none}
+  .ring::before{content:'';position:absolute;inset:80px;border:1px solid rgba(170,221,255,0.08);border-radius:50%}
+  .ring::after{content:'';position:absolute;inset:160px;border:1px solid rgba(244,208,63,0.05);border-radius:50%}
+  .footer-content{position:relative;z-index:10;text-align:center;max-width:600px;padding:0 40px}
+
+  /* Admin Panel */
+  .admin-toggle{position:fixed;top:20px;right:20px;z-index:99999;padding:8px 16px;background:rgba(10,10,18,0.8);border:1px solid rgba(232,228,224,0.15);border-radius:4px;color:var(--muted);font-size:11px;letter-spacing:.1em;cursor:pointer;backdrop-filter:blur(10px);transition:all .3s}
+  .admin-toggle:hover{color:var(--text);border-color:rgba(232,228,224,0.3)}
+  .admin-panel{position:fixed;top:0;right:0;width:520px;max-width:100vw;height:100vh;background:var(--surface);border-left:1px solid rgba(232,228,224,0.1);z-index:99998;display:none;flex-direction:column;overflow:hidden}
+  .admin-panel.active{display:flex}
+  .admin-header{padding:20px 24px;border-bottom:1px solid rgba(232,228,224,0.1);display:flex;justify-content:space-between;align-items:center}
+  .admin-close{background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer}
+  .admin-tabs{display:flex;border-bottom:1px solid rgba(232,228,224,0.08)}
+  .admin-tab{flex:1;padding:12px;background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-size:12px;letter-spacing:.1em;cursor:pointer;transition:all .2s}
+  .admin-tab.active{color:var(--text);border-bottom-color:var(--text);background:rgba(232,228,224,0.06)}
+  .admin-body{flex:1;overflow:auto;padding:20px 24px}
+  .admin-btn{width:100%;padding:10px;margin-bottom:16px;background:rgba(232,228,224,0.05);border:1px dashed rgba(232,228,224,0.2);border-radius:4px;color:var(--muted);font-size:12px;cursor:pointer}
+  .admin-form{padding:16px;background:rgba(5,5,10,0.6);border-radius:4px;margin-bottom:16px;display:flex;flex-direction:column;gap:10px}
+  .admin-form input,.admin-form select,.admin-form textarea{width:100%;padding:8px 12px;background:rgba(5,5,10,0.6);border:1px solid rgba(232,228,224,0.12);border-radius:4px;color:var(--text);font-size:12px;outline:none;font-family:inherit}
+  .admin-form textarea{min-height:60px;resize:vertical}
+  .admin-form button[type="submit"]{padding:8px 16px;background:rgba(244,208,63,0.15);border:1px solid rgba(244,208,63,0.3);border-radius:4px;color:var(--gold);font-size:12px;cursor:pointer}
+  .admin-item{padding:14px;background:rgba(5,5,10,0.4);border-radius:4px;border:1px solid rgba(232,228,224,0.06);margin-bottom:8px}
+  .admin-item .row{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+  .admin-item .actions{display:flex;gap:8px;flex-shrink:0}
+  .admin-item .actions button{background:none;border:none;color:var(--muted);cursor:pointer;font-size:11px;text-decoration:underline}
+  .admin-item .actions button.del{color:var(--red)}
+  .admin-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(232,228,224,0.06);padding:16px 24px;text-align:center}
+  .admin-stat .num{font-size:20px;font-weight:700;color:var(--text)}
+  .admin-stat .lbl{font-size:10px;color:var(--muted);margin-top:2px}
+  .admin-notice{padding:10px 24px;background:rgba(26,188,156,0.08);border-bottom:1px solid rgba(26,188,156,0.15)}
+  .admin-notice p{font-size:11px;color:var(--teal)}
+
+  /* Login overlay */
+  .login-overlay{position:fixed;inset:0;background:rgba(5,5,10,0.95);z-index:100000;display:none;align-items:center;justify-content:center}
+  .login-overlay.active{display:flex}
+  .login-box{background:var(--surface);border:1px solid rgba(232,228,224,0.1);border-radius:8px;padding:40px;text-align:center;max-width:360px;width:90%}
+  .login-box h3{font-size:20px;margin-bottom:24px}
+  .login-box input{width:100%;padding:12px;background:rgba(5,5,10,0.6);border:1px solid rgba(232,228,224,0.12);border-radius:4px;color:var(--text);font-size:14px;text-align:center;margin-bottom:16px;outline:none;font-family:inherit}
+  .login-box button{width:100%;padding:12px;background:rgba(244,208,63,0.15);border:1px solid rgba(244,208,63,0.3);border-radius:4px;color:var(--gold);font-size:13px;cursor:pointer}
+  .login-box .hint{font-size:11px;color:var(--muted);margin-top:12px}
+
+  /* Bottom nav */
+  .bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:1000;padding:20px 32px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to top,rgba(5,5,10,0.95) 0%,rgba(5,5,10,0.6) 60%,transparent 100%)}
+  .bottom-nav .logo{font-size:14px;font-weight:700;letter-spacing:.15em}
+  .bottom-nav .links{display:flex;gap:24px}
+  .bottom-nav .links a{font-size:12px;color:var(--muted);letter-spacing:.08em;transition:color .3s;position:relative}
+  .bottom-nav .links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--text);transition:width .4s cubic-bezier(.25,.46,.45,.94)}
+  .bottom-nav .links a:hover{color:var(--text)}
+  .bottom-nav .links a:hover::after{width:100%}
+
+  /* Scrollbar */
+  ::-webkit-scrollbar{width:6px}
+  ::-webkit-scrollbar-track{background:var(--bg)}
+  ::-webkit-scrollbar-thumb{background:rgba(232,228,224,0.15);border-radius:3px}
+
+  /* Responsive */
+  @media(max-width:768px){
+    .biz-grid,.partner-grid{grid-template-columns:1fr}
+    .admin-panel{width:100%}
+    .proj-header,.proj-row{grid-template-columns:1fr 60px 80px}
+    .proj-header span:nth-child(4),.proj-header span:nth-child(5),.proj-row span:nth-child(4),.proj-row span:nth-child(5){display:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-orb"></div>
+    <div class="hero-orb"></div>
+    <div class="hero-orb"></div>
+    <div class="hero-glow"></div>
+  </div>
+  <div class="hero-content">
+    <h1 class="font-display">洞见产业脉搏，重塑资本边界</h1>
+    <p class="subtitle">专注中国中小企业并购与投融资服务</p>
+    <p class="tag">烁金资本 · SHUOKIN Capital · 深圳 · 上海 · 香港</p>
+  </div>
+</section>
+
+<!-- ========== CORE BUSINESS ========== -->
+<section>
+  <div class="container">
+    <div class="section-label">
+      <span class="en">Core Business</span>
+      <h2 class="font-display">核心业务</h2>
+    </div>
+    <div class="biz-grid" id="bizGrid"></div>
+  </div>
+</section>
+
+<!-- ========== PROJECTS ========== -->
+<section>
+  <div class="container">
+    <div class="section-label">
+      <span class="en">Featured Projects</span>
+      <h2 class="font-display">推荐项目</h2>
+    </div>
+    <div class="proj-table">
+      <div class="proj-header">
+        <span>项目名称</span><span>类型</span><span>行业</span><span>规模</span><span>状态</span>
+      </div>
+      <div id="projList"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== INTELLIGENCE ========== -->
+<section>
+  <div class="container">
+    <div class="section-label">
+      <span class="en">Enterprise Intelligence</span>
+      <h2 class="font-display">企业智库</h2>
+    </div>
+    <div id="intelGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px"></div>
+    <div id="intelDetail" style="margin-top:20px;display:none"></div>
+  </div>
+</section>
+
+<!-- ========== PARTNERS ========== -->
+<section>
+  <div class="container">
+    <div class="section-label">
+      <span class="en">Strategic Partners</span>
+      <h2 class="font-display">合作伙伴</h2>
+    </div>
+    <div class="partner-grid" id="partnerGrid"></div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<section class="footer-section">
+  <div class="footer-bg">
+    <div class="stars" id="stars"></div>
+    <div class="ring"></div>
+  </div>
+  <div class="footer-content">
+    <span class="en" style="font-size:11px;color:var(--muted);letter-spacing:.3em;text-transform:uppercase;margin-bottom:32px;display:block">Get In Touch</span>
+    <h2 class="font-display" style="font-size:clamp(24px,4vw,42px);margin-bottom:20px">联系我们</h2>
+    <p style="font-size:16px;color:var(--muted);letter-spacing:.05em;margin-bottom:40px">开启并购新纪元</p>
+    <form onsubmit="event.preventDefault();alert('感谢您的留言，我们会尽快联系您！')" style="display:flex;flex-direction:column;gap:16px;align-items:center">
+      <input type="email" placeholder="您的邮箱地址" style="width:100%;max-width:400px;padding:14px 20px;background:transparent;border:1px solid rgba(232,228,224,0.15);border-radius:2px;color:var(--text);font-size:14px;letter-spacing:.05em;outline:none;font-family:inherit" onfocus="this.style.borderColor='rgba(232,228,224,0.4)'" onblur="this.style.borderColor='rgba(232,228,224,0.15)'">
+      <button type="submit" style="padding:14px 40px;background:transparent;border:1px solid rgba(232,228,224,0.2);border-radius:2px;color:var(--text);font-size:13px;font-weight:500;letter-spacing:.1em;cursor:pointer;transition:all .3s" onmouseenter="this.style.background='rgba(232,228,224,0.08)';this.style.borderColor='rgba(232,228,224,0.5)'" onmouseleave="this.style.background='transparent';this.style.borderColor='rgba(232,228,224,0.2)'">索取商业计划书</button>
+    </form>
+    <div style="margin-top:80px;display:flex;flex-direction:column;gap:8px">
+      <span class="font-en" style="font-size:12px;font-weight:500;color:var(--muted);letter-spacing:.15em">SHUOKIN CAPITAL</span>
+      <span style="font-size:11px;color:var(--muted);letter-spacing:.05em">深圳 · 上海 · 香港</span>
+      <span style="font-size:10px;color:rgba(138,138,154,0.5);margin-top:8px">&copy; 2024 SHUOKIN Capital. All rights reserved.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ========== ADMIN PANEL ========== -->
+<button class="admin-toggle" onclick="openLogin()">管理</button>
+
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-box">
+    <h3 class="font-display">管理后台登录</h3>
+    <input type="password" id="loginPass" placeholder="输入管理密码" onkeydown="if(event.key==='Enter')doLogin()">
+    <button onclick="doLogin()">进入管理</button>
+    <button onclick="closeLogin()" style="margin-top:8px;background:transparent;border:1px solid rgba(232,228,224,0.1);color:var(--muted)">取消</button>
+    <p class="hint">默认密码：1234</p>
+  </div>
+</div>
+
+<div class="admin-panel" id="adminPanel">
+  <div class="admin-header">
+    <div>
+      <span class="font-en" style="font-size:13px;font-weight:700;color:var(--text);letter-spacing:.1em">SHUOKIN</span>
+      <span style="font-size:11px;color:var(--muted);margin-left:12px">管理后台</span>
+    </div>
+    <button class="admin-close" onclick="closeAdmin()">&#10005;</button>
+  </div>
+  <div class="admin-notice">
+    <p>&#9989; 数据保存在浏览器本地。修改后立即生效，刷新页面不会丢失。</p>
+  </div>
+  <div class="admin-stats" id="adminStats"></div>
+  <div class="admin-tabs">
+    <button class="admin-tab active" onclick="switchTab('projects')">项目管理</button>
+    <button class="admin-tab" onclick="switchTab('partners')">合作伙伴</button>
+  </div>
+  <div class="admin-body" id="adminBody"></div>
+</div>
+
+<!-- ========== BOTTOM NAV ========== -->
+<nav class="bottom-nav">
+  <a href="#" class="logo font-en">SHUOKIN CAPITAL</a>
+  <div class="links">
+    <a href="#" onclick="scrollToTop();return false">首页</a>
+    <a href="#bizGrid" onclick="smoothScroll('bizGrid');return false">核心业务</a>
+    <a href="#projList" onclick="smoothScroll('projList');return false">推荐项目</a>
+    <a href="#partnerGrid" onclick="smoothScroll('partnerGrid');return false">合作伙伴</a>
+  </div>
+</nav>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const DEFAULT_PROJECTS=[
+  {id:1,name:"某新能源电池企业收购案",type:"并购",industry:"新能源",value:"3.2亿元",status:"已完成",description:""},
+  {id:2,name:"AI芯片企业A轮融资",type:"融资",industry:"半导体",value:"2亿元",status:"进行中",description:""},
+  {id:3,name:"精密制造产业链整合",type:"并购",industry:"先进制造",value:"1.8亿元",status:"进行中",description:""},
+  {id:4,name:"生物医药企业B轮融资",type:"融资",industry:"医疗",value:"3.5亿元",status:"已完成",description:""},
+  {id:5,name:"医疗器械跨境收购",type:"并购",industry:"医疗",value:"5000万美元",status:"已完成",description:""},
+  {id:6,name:"消费品牌战略合作",type:"融商",industry:"消费",value:"战略合作",status:"进行中",description:""},
+];
+const DEFAULT_PARTNERS=[
+  {id:1,name:"优势资本",enName:"ADVANTAGE CAPITAL",description:"中国领先的私募股权投资基金，专注于成长期企业股权投资。"},
+  {id:2,name:"红杉资本",enName:"SEQUOIA CAPITAL",description:"全球顶级风险投资机构，投资了众多科技创新企业。"},
+  {id:3,name:"高盛资本",enName:"GOLDMAN SACHS",description:"全球领先的投资银行与金融服务机构，提供全方位资本市场服务。"},
+  {id:4,name:"IDG资本",enName:"IDG CAPITAL",description:"中国最早的风险投资机构之一，深耕科技与消费领域。"},
+  {id:5,name:"深创投",enName:"SCGC",description:"中国本土最大的创投机构之一，专注于高新技术领域投资。"},
+  {id:6,name:"中金资本",enName:"CICC CAPITAL",description:"中国国际金融股份有限公司旗下私募股权投资平台。"},
+];
+const BIZ_DATA=[
+  {id:"mergers",title:"并购",en:"M&A",color:"#C0392B",desc:"专注中国中小企业并购交易，提供从战略筛选、尽职调查到交割整合的全流程顾问服务。",detail:"涵盖产业并购、资产收购、跨境并购等多种交易类型。"},
+  {id:"financing",title:"融资",en:"FINANCING",color:"#F4D03F",desc:"连接优质资本与成长企业，提供股权融资、债权融资、项目融资等多元化资金解决方案。",detail:"与红杉资本、高盛资本等顶级机构深度合作。"},
+  {id:"commercial",title:"融商",en:"COMMERCIAL",color:"#1ABC9C",desc:"打通产业资源网络，促成企业间战略合作、渠道共建与商业生态协同发展。",detail:"依托广泛的产业合作伙伴网络，为企业提供精准的商业资源对接。"},
+];
+const INTEL_CATS=[
+  {id:"medical",name:"医疗",en:"MEDICAL",count:12,desc:"创新药、医疗器械、精准医疗、生物制药等细分赛道。"},
+  {id:"consumption",name:"消费",en:"CONSUMPTION",count:8,desc:"新消费品牌、零售连锁、食品饮料、消费科技等领域。"},
+  {id:"tech",name:"科技",en:"TECHNOLOGY",count:15,desc:"半导体、人工智能、新一代信息技术、硬科技等前沿领域。"},
+  {id:"energy",name:"能源",en:"ENERGY",count:10,desc:"新能源、储能、光伏、氢能等绿色能源赛道。"},
+  {id:"manufacturing",name:"制造",en:"MANUFACTURING",count:9,desc:"先进制造、高端装备、新材料、智能制造等。"},
+  {id:"finance",name:"金融",en:"FINANCE",count:6,desc:"金融科技、供应链金融、财富管理、保险科技等。"},
+];
+const TYPE_COLORS={"并购":"#C0392B","融资":"#F4D03F","融商":"#1ABC9C"};
+const STATUS_COLORS={"已完成":"#1ABC9C","进行中":"#F4D03F","已终止":"#8A8A9A"};
+
+// ============================================================
+// STORAGE
+// ============================================================
+function loadProjects(){
+  try{const raw=localStorage.getItem("shuokin_projects");if(raw)return JSON.parse(raw);}catch(e){}
+  localStorage.setItem("shuokin_projects",JSON.stringify(DEFAULT_PROJECTS));
+  return DEFAULT_PROJECTS;
+}
+function saveProjects(list){localStorage.setItem("shuokin_projects",JSON.stringify(list));window.dispatchEvent(new CustomEvent("shuokin-data-changed"));}
+function loadPartners(){
+  try{const raw=localStorage.getItem("shuokin_partners");if(raw)return JSON.parse(raw);}catch(e){}
+  localStorage.setItem("shuokin_partners",JSON.stringify(DEFAULT_PARTNERS));
+  return DEFAULT_PARTNERS;
+}
+function savePartners(list){localStorage.setItem("shuokin_partners",JSON.stringify(list));window.dispatchEvent(new CustomEvent("shuokin-data-changed"));}
+
+// ============================================================
+// RENDER FRONTEND
+// ============================================================
+function renderBiz(){
+  const el=document.getElementById("bizGrid");
+  if(!el)return;
+  el.innerHTML=BIZ_DATA.map(b=>`
+    <div class="biz-card" style="--color:${b.color}">
+      <div class="accent" style="background:linear-gradient(to right,transparent,${b.color},transparent)"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <h3 class="font-display">${b.title}</h3>
+        <span class="font-en en-label" style="color:${b.color}">${b.en}</span>
+      </div>
+      <p>${b.desc}</p>
+      <p class="detail">${b.detail}</p>
+      <div class="more font-en" style="color:${b.color}"><span>了解更多</span><span style="font-size:14px">&rarr;</span></div>
+    </div>
+  `).join("");
+}
+
+function renderProjects(){
+  const el=document.getElementById("projList");
+  if(!el)return;
+  const projects=loadProjects();
+  el.innerHTML=projects.map(p=>`
+    <div class="proj-row">
+      <span style="font-size:14px;color:#E8E4E0;font-weight:500">${p.name}</span>
+      <span style="font-size:12px;color:${TYPE_COLORS[p.type]};font-weight:500">${p.type}</span>
+      <span style="font-size:12px;color:#8A8A9A">${p.industry}</span>
+      <span class="font-en" style="font-size:13px;color:#F4D03F">${p.value}</span>
+      <span style="font-size:11px;color:${STATUS_COLORS[p.status]}">${p.status}</span>
+    </div>
+  `).join("");
+}
+
+function renderPartners(){
+  const el=document.getElementById("partnerGrid");
+  if(!el)return;
+  const partners=loadPartners();
+  el.innerHTML=partners.map(p=>`
+    <div class="partner-card">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <h4 class="font-display" style="font-size:20px;font-weight:700">${p.name}</h4>
+        <div style="width:32px;height:32px;border-radius:50%;border:1px solid rgba(232,228,224,0.15);display:flex;align-items:center;justify-content:center">
+          <span class="font-en" style="font-size:10px;color:#8A8A9A;font-weight:700">${p.enName.charAt(0)}</span>
+        </div>
+      </div>
+      <span class="font-en" style="font-size:9px;font-weight:500;color:#8A8A9A;letter-spacing:.15em">${p.enName}</span>
+      <p style="font-size:13px;color:#8A8A9A;line-height:1.7">${p.description}</p>
+    </div>
+  `).join("");
+}
+
+function renderIntel(){
+  const el=document.getElementById("intelGrid");
+  if(!el)return;
+  el.innerHTML=INTEL_CATS.map(c=>`
+    <div class="biz-card" onclick="showIntel('${c.id}')" style="padding:28px 24px;cursor:pointer;--color:#F4D03F">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
+        <div>
+          <h4 class="font-display" style="font-size:20px;font-weight:700;margin-bottom:4px">${c.name}</h4>
+          <span class="font-en" style="font-size:10px;color:#8A8A9A;letter-spacing:.15em">${c.en}</span>
+        </div>
+        <span class="font-en" style="font-size:20px;font-weight:700;color:#F4D03F">${c.count}</span>
+      </div>
+      <p style="font-size:12px;color:#8A8A9A;line-height:1.7">${c.desc}</p>
+    </div>
+  `).join("");
+}
+
+function showIntel(catId){
+  const cat=INTEL_CATS.find(c=>c.id===catId);
+  if(!cat)return;
+  const el=document.getElementById("intelDetail");
+  el.style.display="block";
+  el.innerHTML=`<div style="padding:32px;border-radius:4px;border:1px solid rgba(244,208,63,0.15);background:rgba(10,10,18,0.6)">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">
+      <h4 class="font-display" style="font-size:18px;font-weight:700">${cat.name}行业项目</h4>
+      <span class="font-en" style="font-size:11px;color:#8A8A9A">${cat.count} 个项目</span>
+    </div>
+    <p style="font-size:14px;color:#8A8A9A;line-height:1.8">该分类下项目列表将由管理员通过后台添加。</p>
+    <button onclick="document.getElementById('intelDetail').style.display='none'" style="margin-top:16px;padding:8px 16px;background:transparent;border:1px solid rgba(232,228,224,0.15);border-radius:4px;color:#8A8A9A;font-size:12px;cursor:pointer">收起</button>
+  </div>`;
+  el.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+
+function createStars(){
+  const el=document.getElementById("stars");
+  if(!el)return;
+  for(let i=0;i<60;i++){
+    const s=document.createElement("div");
+    s.className="star";
+    s.style.left=Math.random()*100+"%";
+    s.style.top=Math.random()*100+"%";
+    s.style.setProperty("--dur",(3+Math.random()*4)+"s");
+    s.style.animationDelay=Math.random()*4+"s";
+    el.appendChild(s);
+  }
+}
+
+// ============================================================
+// ADMIN PANEL
+// ============================================================
+let adminTab="projects";
+let editingProjId=null;
+let editingPartId=null;
+
+function openLogin(){document.getElementById("loginOverlay").classList.add("active");}
+function closeLogin(){document.getElementById("loginOverlay").classList.remove("active");}
+function doLogin(){
+  const pass=document.getElementById("loginPass").value;
+  if(pass==="1234"){closeLogin();document.getElementById("adminPanel").classList.add("active");renderAdmin();}
+  else{alert("密码错误");}
+}
+function closeAdmin(){document.getElementById("adminPanel").classList.remove("active");}
+
+function switchTab(tab){
+  adminTab=tab;
+  document.querySelectorAll(".admin-tab").forEach(t=>t.classList.remove("active"));
+  event.target.classList.add("active");
+  editingProjId=null;editingPartId=null;
+  renderAdmin();
+}
+
+function renderAdmin(){
+  const projects=loadProjects();
+  const partners=loadPartners();
+  document.getElementById("adminStats").innerHTML=`
+    <div class="admin-stat"><div class="num">${projects.length}</div><div class="lbl">项目</div></div>
+    <div class="admin-stat"><div class="num">${projects.filter(p=>p.type==="并购").length}</div><div class="lbl">并购</div></div>
+    <div class="admin-stat"><div class="num">${projects.filter(p=>p.type==="融资").length}</div><div class="lbl">融资</div></div>
+    <div class="admin-stat"><div class="num">${partners.length}</div><div class="lbl">伙伴</div></div>
+  `;
+  if(adminTab==="projects")renderAdminProjects();else renderAdminPartners();
+}
+
+function renderAdminProjects(){
+  const projects=loadProjects();
+  const body=document.getElementById("adminBody");
+  let html=`<button class="admin-btn" onclick="toggleProjForm()">${editingProjId!==null?"取消":"+ 新增项目"}</button>`;
+  
+  if(editingProjId!==null){
+    const proj=projects.find(p=>p.id===editingProjId)||{};
+    html+=`<form class="admin-form" onsubmit="submitProj(event)">
+      <h4 style="font-size:14px;color:#E8E4E0;margin-bottom:4px">${editingProjId>0?"编辑项目":"新增项目"}</h4>
+      <input id="pName" placeholder="项目名称 *" value="${proj.name||""}" required>
+      <div style="display:flex;gap:8px">
+        <select id="pType"><option value="并购" ${proj.type==="并购"?"selected":""}>并购</option><option value="融资" ${proj.type==="融资"?"selected":""}>融资</option><option value="融商" ${proj.type==="融商"?"selected":""}>融商</option></select>
+        <select id="pStatus"><option value="进行中" ${proj.status==="进行中"?"selected":""}>进行中</option><option value="已完成" ${proj.status==="已完成"?"selected":""}>已完成</option><option value="已终止" ${proj.status==="已终止"?"selected":""}>已终止</option></select>
+      </div>
+      <div style="display:flex;gap:8px">
+        <input id="pIndustry" placeholder="行业 *" value="${proj.industry||""}" required style="flex:1">
+        <input id="pValue" placeholder="规模 如：3.2亿元" value="${proj.value||""}" required style="flex:1">
+      </div>
+      <textarea id="pDesc" placeholder="项目描述（可选）">${proj.description||""}</textarea>
+      <button type="submit">${editingProjId>0?"保存修改":"创建项目"}</button>
+    </form>`;
+  }
+  
+  html+=`<div style="display:flex;flex-direction:column;gap:8px">`;
+  projects.forEach(p=>{
+    html+=`<div class="admin-item">
+      <div class="row">
+        <div style="flex:1;min-width:0">
+          <p style="font-size:14px;color:#E8E4E0;margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.name}</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <span style="font-size:11px;color:${TYPE_COLORS[p.type]};font-weight:500">${p.type}</span>
+            <span style="font-size:11px;color:#8A8A9A">${p.industry}</span>
+            <span style="font-size:11px;color:#F4D03F">${p.value}</span>
+            <span style="font-size:11px;color:${STATUS_COLORS[p.status]}">${p.status}</span>
+          </div>
+        </div>
+        <div class="actions">
+          <button onclick="editProj(${p.id})">编辑</button>
+          <button class="del" onclick="deleteProj(${p.id})">删除</button>
+        </div>
+      </div>
+    </div>`;
+  });
+  if(projects.length===0)html+=`<p style="color:#8A8A9A;text-align:center;padding:20px">暂无项目</p>`;
+  html+=`</div>`;
+  body.innerHTML=html;
+}
+
+function renderAdminPartners(){
+  const partners=loadPartners();
+  const body=document.getElementById("adminBody");
+  let html=`<button class="admin-btn" onclick="togglePartForm()">${editingPartId!==null?"取消":"+ 新增伙伴"}</button>`;
+  
+  if(editingPartId!==null){
+    const part=partners.find(p=>p.id===editingPartId)||{};
+    html+=`<form class="admin-form" onsubmit="submitPart(event)">
+      <h4 style="font-size:14px;color:#E8E4E0;margin-bottom:4px">${editingPartId>0?"编辑合作伙伴":"新增合作伙伴"}</h4>
+      <input id="ptName" placeholder="中文名称 *" value="${part.name||""}" required>
+      <input id="ptEnName" placeholder="英文名称 *" value="${part.enName||""}" required>
+      <textarea id="ptDesc" placeholder="描述（可选）">${part.description||""}</textarea>
+      <button type="submit">${editingPartId>0?"保存修改":"创建"}</button>
+    </form>`;
+  }
+  
+  html+=`<div style="display:flex;flex-direction:column;gap:8px">`;
+  partners.forEach(p=>{
+    html+=`<div class="admin-item">
+      <div class="row">
+        <div style="flex:1;min-width:0">
+          <p style="font-size:14px;color:#E8E4E0;margin-bottom:2px">${p.name}</p>
+          <p style="font-size:10px;color:#8A8A9A;letter-spacing:.1em">${p.enName}</p>
+          ${p.description?`<p style="font-size:12px;color:#8A8A9A;margin-top:6px">${p.description}</p>`:""}
+        </div>
+        <div class="actions">
+          <button onclick="editPart(${p.id})">编辑</button>
+          <button class="del" onclick="deletePart(${p.id})">删除</button>
+        </div>
+      </div>
+    </div>`;
+  });
+  if(partners.length===0)html+=`<p style="color:#8A8A9A;text-align:center;padding:20px">暂无合作伙伴</p>`;
+  html+=`</div>`;
+  body.innerHTML=html;
+}
+
+function toggleProjForm(){editingProjId=editingProjId===null?0:null;renderAdmin();}
+function togglePartForm(){editingPartId=editingPartId===null?0:null;renderAdmin();}
+
+function editProj(id){editingProjId=id;renderAdmin();}
+function editPart(id){editingPartId=id;renderAdmin();}
+
+function deleteProj(id){if(confirm("确定删除此项目？")){const list=loadProjects().filter(p=>p.id!==id);saveProjects(list);renderAdmin();renderProjects();}}
+function deletePart(id){if(confirm("确定删除此合作伙伴？")){const list=loadPartners().filter(p=>p.id!==id);savePartners(list);renderAdmin();renderPartners();}}
+
+function submitProj(e){
+  e.preventDefault();
+  const name=document.getElementById("pName").value;
+  const type=document.getElementById("pType").value;
+  const status=document.getElementById("pStatus").value;
+  const industry=document.getElementById("pIndustry").value;
+  const value=document.getElementById("pValue").value;
+  const description=document.getElementById("pDesc").value;
+  let list=loadProjects();
+  if(editingProjId>0){
+    list=list.map(p=>p.id===editingProjId?{...p,name,type,status,industry,value,description}:p);
+  }else{
+    list.unshift({id:Date.now(),name,type,industry,value,status,description,createdAt:new Date().toISOString().split("T")[0]});
+  }
+  saveProjects(list);
+  editingProjId=null;
+  renderAdmin();renderProjects();
+}
+
+function submitPart(e){
+  e.preventDefault();
+  const name=document.getElementById("ptName").value;
+  const enName=document.getElementById("ptEnName").value;
+  const description=document.getElementById("ptDesc").value;
+  let list=loadPartners();
+  if(editingPartId>0){
+    list=list.map(p=>p.id===editingPartId?{...p,name,enName,description}:p);
+  }else{
+    list.unshift({id:Date.now(),name,enName,description,createdAt:new Date().toISOString().split("T")[0]});
+  }
+  savePartners(list);
+  editingPartId=null;
+  renderAdmin();renderPartners();
+}
+
+// ============================================================
+// SCROLL
+// ============================================================
+function smoothScroll(id){
+  const el=document.getElementById(id);
+  if(el)el.scrollIntoView({behavior:"smooth",block:"start"});
+}
+function scrollToTop(){window.scrollTo({top:0,behavior:"smooth"});}
+
+// ============================================================
+// SYNC
+// ============================================================
+window.addEventListener("shuokin-data-changed",()=>{
+  renderProjects();renderPartners();
+});
+
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener("DOMContentLoaded",()=>{
+  renderBiz();
+  renderProjects();
+  renderPartners();
+  renderIntel();
+  createStars();
+});
+</script>
+</body>
+</html>
